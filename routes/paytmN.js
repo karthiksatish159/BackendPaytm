@@ -27,8 +27,9 @@ router.post('/paynow',[parseUrl, parseJson],(req,res)=>
      paymentDetails.amount=k;
      paymentDetails.customerId=req.body.name;
      paymentDetails.customerEmail=req.body.email;
-
-	
+     paymentDetails.customerPhone=req.body.phone;
+    console.log(paymentDetails);
+  
     //  uname=req.body.name;
     //  Amount=parseInt(req.body.amount)*10;
     //  email=req.body.email;
