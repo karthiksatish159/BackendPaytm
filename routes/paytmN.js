@@ -7,30 +7,34 @@ const config = require("../Paytm/config");
 const parseUrl = express.urlencoded({ extended: false });
 const parseJson = express.json({ extended: false });
 const payment=require('../models/Payments');
-var Amount;
-var email="";
-var phone="";
-var uname="";
-var coins_;
+// var Amount;
+// var email="";
+// var phone="";
+// var uname="";
+// var coins_;
+var paymentDetails={
+  amount:"",
+  customerId:"",
+  customerEmail:"",
+  customerPhone:""
+};
 router.post('/paynow',[parseUrl, parseJson],(req,res)=>
 {
     var m=parseInt(req.body.amount)*10;
     var k="";
     k=m.toString();
-    console.log(k);
-    var paymentDetails = {
-        amount:k,
-         customerId:req.body.name,
-         customerEmail: req.body.email,
-        customerPhone: req.body.phone
-     }
+    //console.log(k);
+     paymentDetails.amount=k;
+     paymentDetails.customerId=req.body.name;
+     paymentDetails.customerEmail=req.body.email;
+
 	
-     uname=req.body.name;
-     Amount=parseInt(req.body.amount)*10;
-     email=req.body.email;
-     phone=req.body.phone;
-     //amount means coins and above i am making the conversion that coins into amount by multiplying by 10
-     coins_=parseInt(req.body.amount);
+    //  uname=req.body.name;
+    //  Amount=parseInt(req.body.amount)*10;
+    //  email=req.body.email;
+    //  phone=req.body.phone;
+      //amount means coins and above i am making the conversion that coins into amount by multiplying by 10
+    //  coins_=parseInt(req.body.amount);
 
 
      if(!paymentDetails.amount || !paymentDetails.customerId || !paymentDetails.customerEmail || !paymentDetails.customerPhone) {
@@ -130,11 +134,11 @@ router.post("/callback", (req, res) => {
                     // console.log(email);
                    var newTrans=new payment(
                     {
-                        username:uname,
-                        email:email,
-                        contact:phone,
+                        username:paymentDetails.customerId,
+                        email:paymentDetails.customerEmail,
+                        contact:paymentDetails.customerPhone,
                         companyName:"Holoworld",
-                        amount:Amount,
+                        amount:paymentDetails.amount,
                         order_id:_result.ORDERID,
                         payment_id:_result.TXNID,
                         date:Date.now(),
@@ -143,6 +147,7 @@ router.post("/callback", (req, res) => {
                     })
                     newTrans.save().then((newObj)=>
                     {
+                        var coins_=paymentDetails.amount;
                         if(newObj)
                         {
                             if(typeof coins_==='undefined')
@@ -151,7 +156,7 @@ router.post("/callback", (req, res) => {
                             }
                             else
                             {
-                              res.redirect(`/coins/addCoins/${coins_}/${email}`);
+                              res.redirect(`/coins/addCoins/${coins_}/${newObj.email}`);
                             }
                         }
                         else

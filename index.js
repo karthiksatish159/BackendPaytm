@@ -22,7 +22,6 @@ mongoose.connect(db,{useNewUrlParser:true})
 .catch((e)=>console.log(e));
 app.get('/',(req,res)=>
 {
-  // console.log(req.params.coin);
   res.render('index',{coins:req.params.coin});
 })
 app.get("/:coin", (req, res) => {

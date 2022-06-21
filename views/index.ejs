@@ -13,7 +13,7 @@
               <form class="" action="/pay/paynow" method="post">
                 <div class="form-group">
                   <label for="">Name: </label>
-                  <input class="form-control" type="text" name="name" value="">
+                  <input class="form-control" type="text" name="name" placeholder="Dont give spaces b/w letters" value="">
                 </div>
                 <div class="form-group">
                   <label for="">Email: </label>
@@ -25,8 +25,8 @@
                 </div>
                  <% if(typeof coins==="undefined"){%>
                   <div class="form-group">
-                  <label for="">Amount: </label>
-                  <input class="form-control" type="text" name="amount" value="">
+                  <label for="">Coins: </label>
+                  <input class="form-control" type="text" name="amount" placeholder="Each coin is 10 rupees" value="">
                 </div>
                 <%}else
                 {%>
