@@ -19,6 +19,7 @@ router.post('/paynow',[parseUrl, parseJson],(req,res)=>
     let value="";
     value=conversion.toString();
     //Dont confuse the name of attribute is amount but it will take the 
+    console.log(value);
     paymentDetails.amount=value;
     paymentDetails.customerId=req.body.name;
     paymentDetails.customerEmail=req.body.email;
